@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<launch>
+    <arg name="effort_max" default="80" />
+    <arg name="enable_at_startup" default="true" />
+    <rosparam command="load" file="$(find au_core)/params/topics.yaml" />
+
+    <group ns="dynamics">
+        <node name="pid_aggregator" pkg="pid_control" type="pid_aggregator" output="screen" >
+            <param name="enable_at_startup" value="$(arg enable_at_startup)" />
+            <param name="normalize" value="true" />
+            <param name="motor_rate" value="10" />
+            <param name="motor_max" value="$(arg effort_max)" />
+            <param name="depth_max" value="12" />   <!-- changing this will cause PID to change due to normalization -->
+            <param name="pitch_ns" value="/pitch" />
+            <param name="roll_ns" value="/roll" />
+            <param name="yaw_ns" value="/yaw" />
+            <param name="depth_ns" value="/depth" />
+            <remap from="~target_topic" to="/topic/dynamics/target" />
+            <remap from="~error_topic" to="/topic/dynamics/error" />
+            <remap from="~state_topic" to="/topic/sensor/dynamics_state" />
+            <remap from="~ver_base_topic" to="/topic/motor/ver/base" />
+            <remap from="~hor_base_topic" to="/topic/motor/hor/base" />
+            <remap from="~str_base_topic" to="/topic/motor/str/base" />
+            <remap from="~ver_diff_topic" to="/topic/motor/ver/diff" />
+            <remap from="~hor_diff_topic" to="/topic/motor/hor/diff" />
+            <remap from="~str_diff_topic" to="/topic/motor/str/diff" />
+        </node>
+    </group>
+</launch>

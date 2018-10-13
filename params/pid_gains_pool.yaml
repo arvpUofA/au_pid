@@ -1,0 +1,35 @@
+depth:
+  controller:
+    Kp: 15
+    Ki: 0.2
+    Kd: 5
+  stability:
+    mean: 0.05
+    variance: 0.0001
+
+yaw:
+  controller:
+    Kp: 60
+    Ki: 5
+    Kd: 0
+  stability:
+    mean: 0.5
+    variance: 0.001
+
+roll:
+  controller:
+    Kp: 60
+    Ki: 5
+    Kd: 0.0
+  stability:
+    mean: 0.5
+    variance: 0.001
+
+pitch:
+  controller:
+    Kp: 1.0
+    Ki: 3.0
+    Kd: 0.0
+  stability:
+    mean: 0.5
+    variance: 0.001

@@ -1,0 +1,12 @@
+error_threshold:
+  x: 5
+  y: 0.1
+  z: 0.2
+advance_threshold:
+  enabled: true
+  z: 0.2
+  yaw: 10
+depth_en: true
+lin_x_en: true
+max_effort: 6
+base_effort: 3

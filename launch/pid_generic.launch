@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<launch>
+    <arg name="motor_axis" />
+    <arg name="motor_type" />
+    <arg name="namespace" />
+    <arg name="angle_wrap" default="0.0"/>
+    <arg name="loop_rate" default="20.0" />
+    <arg name="effort_max" default="80.0" />
+
+    <arg name="motor_ns" value="/motor" />
+    <arg name="motor_topic" value="$(eval motor_ns + '/' + motor_axis + '/' + motor_type)" />
+
+    <group ns="$(arg namespace)">
+        <node name="controller" pkg="pid" type="controller" output="screen" >
+            <param name="upper_limit" value="$(arg effort_max)" />
+            <param name="lower_limit" value="$(eval effort_max * -1.0)" />
+            <param name="windup_limit" value="$(arg effort_max)" />
+            <param name="max_loop_frequency" value="$(arg loop_rate)" />
+            <param name="min_loop_frequency" value="$(arg loop_rate)" />
+            <param name="angle_error" value="true" if="$(eval angle_wrap > 0)" />
+            <param name="angle_wrap" value="$(arg angle_wrap)" if="$(eval angle_wrap > 0)" />
+        </node>
+
+        <node name="effort_remap" pkg="topic_tools" type="transform"
+              args="/$(arg namespace)/control_effort
+                    $(arg motor_topic) au_core/MCBaseSpeed
+                    'au_core.msg.MCBaseSpeed(header=std_msgs.msg.Header(0, rospy.Time.now(), &quot;&quot;), baseSpeed=m.data )'
+                    --import au_core std_msgs rospy"
+              if="$(eval motor_type == 'baseSpeed')"
+        />
+
+        <node name="effort_remap" pkg="topic_tools" type="transform"
+              args="/$(arg namespace)/control_effort
+                    $(arg motor_topic) au_core/MCDiff
+                    'au_core.msg.MCDiff(header=std_msgs.msg.Header(0, rospy.Time.now(), &quot;&quot;), differential=m.data )'
+                    --import au_core std_msgs rospy"
+              if="$(eval motor_type == 'differential')"
+        />
+    </group>
+</launch>

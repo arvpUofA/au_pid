@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<launch>
+    <arg name="scenario" default="pool" />
+    <arg name="enabled" default="true" />
+    <arg name="rate" value="20.0" />
+    <arg name="motor_max" value="90.0" />
+    <arg name="angle_wrap" value="100" /> <!-- value=3.142 for not normalized -->
+
+    <rosparam command="load" file="$(find pid_control)/params/pid_gains_pool.yaml" if="$(eval scenario == 'pool')" />
+    <rosparam command="load" file="$(find pid_control)/params/pid_gains_sim.yaml" if="$(eval scenario == 'sim')" />
+
+    <include file="$(find pid_control)/launch/pid_aggregator.launch">
+        <arg name="effort_max" value="$(arg motor_max)" />
+        <arg name="enable_at_startup" value="$(arg enabled)" />
+    </include>
+
+    <include file="$(find au_control)/launch/stability.launch">
+        <arg name="loop_rate" value="$(arg rate)" />
+    </include>
+
+    <include file="$(find pid_control)/launch/pid_generic.launch" >
+        <arg name="namespace" value="yaw"/>
+        <arg name="effort_max" value="$(arg motor_max)" />
+        <arg name="loop_rate" value="$(arg rate)" />
+        <arg name="motor_axis" value="hor"/>
+        <arg name="motor_type" value="differential"/>
+        <arg name="angle_wrap" value="$(eval angle_wrap * 2)" />
+    </include>
+
+    <include file="$(find pid_control)/launch/pid_generic.launch" >
+        <arg name="namespace" value="pitch"/>
+        <arg name="effort_max" value="$(arg motor_max)" />
+        <arg name="loop_rate" value="$(arg rate)" />
+        <arg name="motor_axis" value="ver"/>
+        <arg name="motor_type" value="differential"/>
+        <arg name="angle_wrap" value="$(eval angle_wrap * 2)" />
+    </include>
+
+    <include file="$(find pid_control)/launch/pid_generic.launch" >
+        <arg name="namespace" value="roll"/>
+        <arg name="effort_max" value="$(arg motor_max)" />
+        <arg name="loop_rate" value="$(arg rate)" />
+        <arg name="motor_axis" value="str"/>
+        <arg name="motor_type" value="differential"/>
+        <arg name="angle_wrap" value="$(eval angle_wrap * 2)" />
+    </include>
+
+    <include file="$(find pid_control)/launch/pid_generic.launch" >
+        <arg name="namespace" value="depth"/>
+        <arg name="effort_max" value="$(eval motor_max-20)" />
+        <arg name="loop_rate" value="$(arg rate)" />
+        <arg name="motor_axis" value="ver"/>
+        <arg name="motor_type" value="baseSpeed"/>
+    </include>
+</launch>

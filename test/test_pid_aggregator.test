@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<launch>
+    <arg name="rate" value="10.0" />
+
+    <node name="pid_aggregator" pkg="pid_control" type="pid_aggregator" output="screen" >
+        <param name="normalize" value="false" />
+        <param name="motor_rate" value="10" />
+        <param name="pitch_ns" value="/pitch" />
+        <param name="motor_max" value="100" />
+        <param name="roll_ns" value="/roll" />
+        <param name="yaw_ns" value="/yaw" />
+        <param name="depth_ns" value="/depth" />
+        <param name="target_topic" value="/target" />
+        <param name="error_topic" value="/error" />
+        <param name="state_topic" value="/state" />
+        <param name="ver_base_topic" value="/ver/base" />
+        <param name="hor_base_topic" value="/hor/base" />
+        <param name="str_base_topic" value="/str/base" />
+    </node>
+    <test
+        test-name="pid_aggregator_tests"
+        pkg="pid_control"
+        type="pid_aggregator_tests"
+    />
+</launch>

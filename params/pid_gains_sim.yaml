@@ -1,0 +1,45 @@
+x:
+  stability:
+    mean: 0.3
+    variance: 0.005
+
+y:
+  stability:
+    mean: 0.3
+    variance: 0.005
+
+depth:
+  controller:
+    Kp: 2
+    Ki: 0.004
+    Kd: 1
+  stability:
+    mean: 0.02
+    variance: 0.002
+
+yaw:
+  controller:
+    Kp: 10
+    Ki: 0
+    Kd: 0
+  stability:
+    mean: 0.05
+    variance: 0.00001
+
+roll:
+  controller:
+    Kp: 8.0
+    Ki: 0.05
+    Kd: 0.0
+  stability:
+    mean: 0.05
+    variance: 0.00001
+
+pitch:
+  controller:
+    Kp: 2
+    Ki: 0.0
+    Kd: 0.0
+  stability:
+    mean: 0.05
+    variance: 0.00001
