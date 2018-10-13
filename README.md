@@ -1,5 +1,5 @@
 ## PID Controller
-Must move the PID package into the au_everything workspace before running.
+Must move the PID package into the au_everything workspace before running it.
 
 Subscribes to `/dynamics/state`, `/dynamics/target`.
 Publishes to `/dynamics/error` and all PID controllers.
