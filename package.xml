@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>pid_control</name>
+  <name>au_pid</name>
   <version>0.0.0</version>
-  <description>The pid_control package</description>
+  <description>The au_pid package</description>
 
   <maintainer email="waqar@arvp.org">Rumman Waqar</maintainer>
 
