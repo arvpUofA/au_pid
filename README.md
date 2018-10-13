@@ -1,5 +1,5 @@
 ## PID Controller
-Must move the PID package into ~/au_everything/catkin_ws before running it.
+Must move the PID package into ~/au_everything/catkin_ws/src before running it.
 
 Subscribes to `/dynamics/state`, `/dynamics/target`.
 Publishes to `/dynamics/error` and all PID controllers.
